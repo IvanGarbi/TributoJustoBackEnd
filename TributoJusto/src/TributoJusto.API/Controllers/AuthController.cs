@@ -36,13 +36,39 @@ namespace TributoJusto.API.Controllers
         public async Task<IActionResult> Get()
         {
             // Create the service.
+            //using (HttpClient client = new HttpClient())
+            //{
+
+            //    string searchTerm = "Harry Potter";
+
+            //    string apiKey = ""; // Substitua com sua chave de API do Google Books
+            //    string apiUrl = $"https://www.googleapis.com/books/v1/volumes?q={searchTerm}&key={apiKey}";
+
+            //    HttpResponseMessage response = await client.GetAsync(apiUrl);
+
+            //    if (response.IsSuccessStatusCode)
+            //    {
+            //        string result = await response.Content.ReadAsStringAsync();
+
+            //        var responseObject = JsonSerializer.Deserialize<RootBookObject>(result);
+
+            //        Console.WriteLine(result);
+            //        // Aqui você pode processar os dados retornados conforme necessário
+            //    }
+            //    else
+            //    {
+            //        Console.WriteLine($"Erro na solicitação: {response.StatusCode} - {response.ReasonPhrase}");
+            //    }
+            //}
+
+
             using (HttpClient client = new HttpClient())
             {
 
-                string searchTerm = "Harry";
+                string searchTerm = "Fast";
 
                 string apiKey = ""; // Substitua com sua chave de API do Google Books
-                string apiUrl = $"https://www.googleapis.com/books/v1/volumes?q={searchTerm}&key={apiKey}";
+                string apiUrl = $"http://www.omdbapi.com/?i=tt3896198&apikey={apiKey}&t={searchTerm}";
 
                 HttpResponseMessage response = await client.GetAsync(apiUrl);
 
@@ -50,7 +76,7 @@ namespace TributoJusto.API.Controllers
                 {
                     string result = await response.Content.ReadAsStringAsync();
 
-                    var responseObject = JsonSerializer.Deserialize<RootObject>(result);
+                    var responseObject = JsonSerializer.Deserialize<RootMovieObject>(result);
 
                     Console.WriteLine(result);
                     // Aqui você pode processar os dados retornados conforme necessário
@@ -60,6 +86,8 @@ namespace TributoJusto.API.Controllers
                     Console.WriteLine($"Erro na solicitação: {response.StatusCode} - {response.ReasonPhrase}");
                 }
             }
+
+        
 
             return Ok();
         }
@@ -193,7 +221,7 @@ namespace TributoJusto.API.Controllers
 }
 
 
-public class RootObject
+public class RootBookObject
 {
     public Item[] items { get; set; }
 }
@@ -232,3 +260,28 @@ public class RetailPrice
     public decimal amount { get; set; }
     public string currencyCode { get; set; }
 }
+
+
+
+
+
+
+
+
+
+
+
+public class RootMovieObject
+{
+    public string Title { get; set; }
+    public string Year { get; set; }
+    public string Genre { get; set; }
+    public string Director { get; set; }
+    public string Writer { get; set; }
+    public string Actors { get; set; }
+    public string Plot { get; set; }
+    public string Country { get; set; }
+    public string imdbRating { get; set; }
+    
+}
+
