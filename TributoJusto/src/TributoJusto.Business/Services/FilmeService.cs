@@ -7,20 +7,20 @@ using TributoJusto.Business.Validations;
 
 namespace TributoJusto.Business.Services
 {
-    public class FavoritoService : Service, IFavoritoService
+    public class FilmeService : Service, IFilmeService
     {
-        private readonly IFavoritoRepository _favoritoRepository;
+        private readonly IFilmeRepository _filmeRepository;
 
-        public FavoritoService(IFavoritoRepository favoritoRepository,
-                              INotificador notificador) : base(notificador)
+        public FilmeService(IFilmeRepository filmeRepository,
+                            INotificador notificador) : base(notificador)
         {
-            _favoritoRepository = favoritoRepository;
+            _filmeRepository = filmeRepository;
         }
 
-        public async Task Create(Favorito favorito)
+        public async Task Create(Filme filme)
         {
-            var validator = new FavoritoValidation();
-            var resultValidation = validator.Validate(favorito);
+            var validator = new FilmeValidation();
+            var resultValidation = validator.Validate(filme);
 
             if (!resultValidation.IsValid)
             {
@@ -32,25 +32,25 @@ namespace TributoJusto.Business.Services
                 return;
             }
 
-            await _favoritoRepository.Create(favorito);
+            await _filmeRepository.Create(filme);
         }
 
         public async Task Delete(Guid id)
         {
-            var favoritoDb = await _favoritoRepository.GetById(id);
+            var filmeDb = await _filmeRepository.GetById(id);
 
-            if (favoritoDb == null)
+            if (filmeDb == null)
             {
-                _notificador.AdicionarNotificacao(new Notificacao("Nenhum favorito identificado."));
+                _notificador.AdicionarNotificacao(new Notificacao("Nenhum filme identificado."));
                 return;
             }
 
-            await _favoritoRepository.Delete(id);
+            await _filmeRepository.Delete(id);
         }
 
         public async void Dispose()
         {
-            _favoritoRepository?.Dispose();
+            _filmeRepository?.Dispose();
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using System.Linq.Expressions;
 using TributoJusto.Business.Interfaces.Repository;
 using TributoJusto.Business.Models;
 using TributoJusto.Data.Context;
@@ -22,19 +23,13 @@ namespace TributoJusto.Data.Repository
             await SaveChanges();
         }
 
-        //public async Task Update(TEntity entity)
-        //{
-        //    Db.Update(entity);
-        //    await SaveChanges();
-        //}
-
         public async Task Delete(Guid id)
         {
             Db.Remove(new TEntity { Id = id });
             await SaveChanges();
         }
 
-        public virtual async Task<TEntity> ReadById(Guid id)
+        public virtual async Task<TEntity> GetById(Guid id)
         {
             return await DbSet.AsNoTracking().Where(x => x.Id == id).FirstOrDefaultAsync();
         }
@@ -42,11 +37,6 @@ namespace TributoJusto.Data.Repository
         //public virtual async Task<IEnumerable<TEntity>> ReadExpression(Expression<Func<TEntity, bool>> predicateExpression)
         //{
         //    return await DbSet.AsNoTracking().Where(predicateExpression).ToListAsync();
-        //}
-
-        //public virtual async Task<IEnumerable<TEntity>> Read()
-        //{
-        //    return await DbSet.AsNoTracking().ToListAsync();
         //}
 
         public async Task<int> SaveChanges()

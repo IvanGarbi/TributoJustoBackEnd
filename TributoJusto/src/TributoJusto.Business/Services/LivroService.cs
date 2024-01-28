@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using TributoJusto.Business.Interfaces.Notification;
+﻿using TributoJusto.Business.Interfaces.Notification;
 using TributoJusto.Business.Interfaces.Repository;
 using TributoJusto.Business.Interfaces.Services;
 using TributoJusto.Business.Models;
+using TributoJusto.Business.Notifications;
+using TributoJusto.Business.Validations;
 
 namespace TributoJusto.Business.Services
 {
@@ -20,19 +17,40 @@ namespace TributoJusto.Business.Services
             _livroRepository = livroRepository;
         }
 
-        public Task Create(Livro livro)
+        public async Task Create(Livro livro)
         {
-            throw new NotImplementedException();
+            var validator = new LivroValidation();
+            var resultValidation = validator.Validate(livro);
+
+            if (!resultValidation.IsValid)
+            {
+                foreach (var error in resultValidation.Errors)
+                {
+                    _notificador.AdicionarNotificacao(new Notificacao(error.ErrorMessage, error.PropertyName));
+                }
+
+                return;
+            }
+
+            await _livroRepository.Create(livro);
         }
 
-        public Task Delete(Guid id)
+        public async Task Delete(Guid id)
         {
-            throw new NotImplementedException();
+            var livroDb = await _livroRepository.GetById(id);
+
+            if (livroDb == null)
+            {
+                _notificador.AdicionarNotificacao(new Notificacao("Nenhum livro identificado."));
+                return;
+            }
+
+            await _livroRepository.Delete(id);
         }
 
-        public void Dispose()
+        public async void Dispose()
         {
-            throw new NotImplementedException();
+            _livroRepository?.Dispose();
         }
     }
 }
