@@ -77,6 +77,7 @@ builder.Services.AddDbContext<TributoJustoDbContext>(options =>
 });
 
 builder.Services.AddIdentity<IdentityUser, IdentityRole>()
+    .AddErrorDescriber<IdentityMensagensPortugues>()
     .AddEntityFrameworkStores<ApplicationDbContext>();
 
 ConfigureJwt(builder);
