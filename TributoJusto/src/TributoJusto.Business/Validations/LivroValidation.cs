@@ -1,6 +1,4 @@
 ﻿using FluentValidation;
-using System;
-using System.Collections.Generic;
 using TributoJusto.Business.Models;
 
 namespace TributoJusto.Business.Validations

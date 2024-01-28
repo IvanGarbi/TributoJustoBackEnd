@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
@@ -13,7 +11,6 @@ using TributoJusto.API.ViewModels;
 using TributoJusto.API.Controllers;
 using Asp.Versioning;
 using TributoJusto.Business.Interfaces.Notification;
-using TributoJusto.API.Migrations;
 
 namespace TributoJusto.API.V1.Controllers
 {
