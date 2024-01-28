@@ -7,8 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Interfaces\Services\" />
-    <Folder Include="Services\" />
+    <PackageReference Include="FluentValidation" Version="11.9.0" />
   </ItemGroup>
 
 </Project>
