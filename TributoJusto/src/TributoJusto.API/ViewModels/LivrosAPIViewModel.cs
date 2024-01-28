@@ -7,7 +7,7 @@
 
     public class Item
     {
-        public Guid Id { get; set; } = Guid.NewGuid();
+        //public Guid Id { get; set; } = Guid.NewGuid();
         public VolumeInfo volumeInfo { get; set; }
         public AccessInfo accessInfo { get; set; }
         public SaleInfo saleInfo { get; set; }
