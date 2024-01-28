@@ -7,7 +7,9 @@ using System.Text;
 using TributoJusto.API.Controllers;
 using TributoJusto.API.Data;
 using TributoJusto.API.Extension;
+using TributoJusto.Business.Interfaces.Repository;
 using TributoJusto.Data.Context;
+using TributoJusto.Data.Repository;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -81,6 +83,17 @@ builder.Services.AddIdentity<IdentityUser, IdentityRole>()
     .AddEntityFrameworkStores<ApplicationDbContext>();
 
 ConfigureJwt(builder);
+
+// Dependcy Injection
+//builder.Services.AddScoped<ApplicationDbContext>();
+builder.Services.AddTransient<TributoJustoDbContext>();
+builder.Services.AddScoped<IFilmeRepository, FilmeRepository>();
+builder.Services.AddScoped<ILivroRepository, LivroRepository>();
+builder.Services.AddScoped<IFavoritoRepository, FavoritoRepository>();
+
+
+// AutoMapper
+builder.Services.AddAutoMapper(typeof(Program));
 
 var app = builder.Build();
 
