@@ -20,7 +20,7 @@ namespace TributoJusto.API.Controllers
             _mapper = mapper;
         }
 
-        [HttpGet("Favoritos/{id:guid}")]
+        [HttpGet("Favoritos/{usuarioId:guid}")]
         public async Task<ActionResult<FilmeViewModel>> Get(Guid usuarioId)
         {
             return CustomResponse(_mapper.Map<FilmeViewModel>(await _favoritoRepository.ReadById(usuarioId)));
