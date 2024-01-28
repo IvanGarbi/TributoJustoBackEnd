@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
-using System.ComponentModel.DataAnnotations;
+using TributoJusto.Business.Interfaces.Notification;
 
 namespace TributoJusto.API.Controllers
 {
@@ -11,6 +11,12 @@ namespace TributoJusto.API.Controllers
     public abstract class MainController : ControllerBase
     {
         protected ICollection<string> Erros = new List<string>();
+        protected readonly INotificador _notificador;
+
+        public MainController(INotificador notificador)
+        {
+            _notificador = notificador;
+        }
 
         protected ActionResult CustomResponse(object result = null)
         {
@@ -19,9 +25,12 @@ namespace TributoJusto.API.Controllers
                 return Ok(result);
             }
 
+            List<string> erros = new List<string>();
+            erros.AddRange(_notificador.GetNotificacoes().Select(x => x.Mensagem));
+
             return BadRequest(new ValidationProblemDetails(new Dictionary<string, string[]>
             {
-                { "Mensagens", Erros.ToArray() }
+                { "Erros", erros.ToArray() }
             }));
         }
 
@@ -36,61 +45,19 @@ namespace TributoJusto.API.Controllers
             return CustomResponse();
         }
 
-        protected ActionResult CustomResponse(ResponseResult resposta)
-        {
-            ResponsePossuiErros(resposta);
-
-            return CustomResponse();
-        }
-
-        protected bool ResponsePossuiErros(ResponseResult resposta)
-        {
-            if (resposta == null || !resposta.Errors.Mensagens.Any()) return false;
-
-            foreach (var mensagem in resposta.Errors.Mensagens)
-            {
-                AdicionarErroProcessamento(mensagem);
-            }
-
-            return true;
-        }
-
         protected bool OperacaoValida()
         {
-            return !Erros.Any();
+
+            return !_notificador.TemNotificacao();
         }
 
         protected void AdicionarErroProcessamento(string erro)
         {
-            Erros.Add(erro);
-        }
 
-        protected void LimparErrosProcessamento()
-        {
-            Erros.Clear();
+            _notificador.AdicionarNotificacao(new Business.Notifications.Notificacao(erro));
         }
     }
 }
 
 
-public class ResponseResult
-{
-    public ResponseResult()
-    {
-        Errors = new ResponseErrorMessages();
-    }
 
-    public string Title { get; set; }
-    public int Status { get; set; }
-    public ResponseErrorMessages Errors { get; set; }
-}
-
-public class ResponseErrorMessages
-{
-    public ResponseErrorMessages()
-    {
-        Mensagens = new List<string>();
-    }
-
-    public List<string> Mensagens { get; set; }
-}

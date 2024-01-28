@@ -10,11 +10,16 @@ using System.Security.Claims;
 using System.Text;
 using TributoJusto.API.Extension;
 using TributoJusto.API.ViewModels;
+using TributoJusto.API.Controllers;
+using Asp.Versioning;
+using TributoJusto.Business.Interfaces.Notification;
+using TributoJusto.API.Migrations;
 
-namespace TributoJusto.API.Controllers
+namespace TributoJusto.API.V1.Controllers
 {
     [AllowAnonymous]
-    [Route("[controller]")]
+    [Route("v{version:apiVersion}/[controller]")]
+    [ApiVersion("1.0")]
     public class AuthController : MainController
     {
         private readonly SignInManager<IdentityUser> _signInManager;
@@ -23,7 +28,8 @@ namespace TributoJusto.API.Controllers
 
         public AuthController(SignInManager<IdentityUser> signInManager,
                       UserManager<IdentityUser> userManager,
-                      IOptions<AppSettings> appSettings)
+                      INotificador notificador,
+                      IOptions<AppSettings> appSettings) : base(notificador)
         {
             _signInManager = signInManager;
             _userManager = userManager;
@@ -82,7 +88,8 @@ namespace TributoJusto.API.Controllers
         [HttpDelete("SignOut")]
         public async Task<IActionResult> SignOut()
         {
-            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            await _signInManager.SignOutAsync();
+
             return CustomResponse("Logout com sucesso");
         }
 
@@ -126,7 +133,7 @@ namespace TributoJusto.API.Controllers
 
             foreach (var userRole in userRoles)
             {
-                claims.Add(new Claim("role", userRole)); // tratando roles e claims da mesma forma!!!
+                claims.Add(new Claim("role", userRole));
             }
 
             var identityClaims = new ClaimsIdentity();

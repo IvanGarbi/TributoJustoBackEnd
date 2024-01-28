@@ -1,21 +1,24 @@
+using Asp.Versioning;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Text;
-using TributoJusto.API.Controllers;
+using System.Text.Json.Serialization;
 using TributoJusto.API.Data;
 using TributoJusto.API.Extension;
+using TributoJusto.Business.Interfaces.Notification;
 using TributoJusto.Business.Interfaces.Repository;
+using TributoJusto.Business.Interfaces.Services;
+using TributoJusto.Business.Notifications;
+using TributoJusto.Business.Services;
 using TributoJusto.Data.Context;
 using TributoJusto.Data.Repository;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-
-builder.Services.AddControllers();
+builder.Services.AddControllers().AddJsonOptions(x => x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(options =>
 {
@@ -52,20 +55,18 @@ builder.Services.AddSwaggerGen(options =>
 });
 
 
-//// API Versioning
-//builder.Services.AddApiVersioning(options =>
-//{
-//    options.AssumeDefaultVersionWhenUnspecified = true;
-//    options.DefaultApiVersion = new ApiVersion(1, 0);
-//    options.ReportApiVersions = true;
-//});
-
-//builder.Services.AddVersionedApiExplorer(options =>
-//{
-//    options.GroupNameFormat = "'v'VVV";
-//    options.SubstituteApiVersionInUrl = true;
-//});
-//// End API Versioning
+// API Versioning
+builder.Services.AddApiVersioning(options =>
+{
+    options.AssumeDefaultVersionWhenUnspecified = true;
+    options.DefaultApiVersion = new ApiVersion(1, 0);
+    options.ReportApiVersions = true;
+}).AddApiExplorer(op =>
+{
+    op.GroupNameFormat = "'v'VVV";
+    op.SubstituteApiVersionInUrl = true;
+});
+// End API Versioning
 
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
@@ -85,11 +86,15 @@ builder.Services.AddIdentity<IdentityUser, IdentityRole>()
 ConfigureJwt(builder);
 
 // Dependcy Injection
-//builder.Services.AddScoped<ApplicationDbContext>();
 builder.Services.AddTransient<TributoJustoDbContext>();
 builder.Services.AddScoped<IFilmeRepository, FilmeRepository>();
 builder.Services.AddScoped<ILivroRepository, LivroRepository>();
 builder.Services.AddScoped<IFavoritoRepository, FavoritoRepository>();
+
+builder.Services.AddScoped<IFilmeService, FilmeService>();
+builder.Services.AddScoped<ILivroService, LivroService>();
+builder.Services.AddScoped<IFavoritoService, FavoritoService>();
+builder.Services.AddScoped<INotificador, Notificador>();
 
 
 // AutoMapper
@@ -106,6 +111,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();

@@ -1,25 +1,31 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using Asp.Versioning;
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using System.Text.Json;
+using TributoJusto.API.Controllers;
 using TributoJusto.API.ViewModels;
+using TributoJusto.Business.Interfaces.Notification;
 
-namespace TributoJusto.API.Controllers
+namespace TributoJusto.API.V1.Controllers
 {
-    [AllowAnonymous]
-    [Route("[controller]")]
-    public class LivrosController : MainController
+    [Route("v{version:apiVersion}/[controller]")]
+    [ApiVersion("1.0")]
+    public class FilmesController : MainController
     {
+        public FilmesController(INotificador notificador) : base(notificador)
+        {
+
+        }
+
         [HttpGet]
-        public async Task<IActionResult> Get(string nomeLivro)
+        public async Task<IActionResult> Get(string nomeFilme)
         {
             using (HttpClient client = new HttpClient())
             {
-
-                //string searchTerm = "Harry Potter";
-                string searchTerm = nomeLivro;
+                string searchTerm = nomeFilme;
 
                 string apiKey = ""; // Substitua com sua chave de API do Google Books
-                string apiUrl = $"https://www.googleapis.com/books/v1/volumes?q={searchTerm}&key={apiKey}";
+                string apiUrl = $"http://www.omdbapi.com/?i=tt3896198&apikey={apiKey}&t={searchTerm}";
 
                 HttpResponseMessage response = await client.GetAsync(apiUrl);
 
@@ -27,15 +33,13 @@ namespace TributoJusto.API.Controllers
                 {
                     string result = await response.Content.ReadAsStringAsync();
 
-                    var responseObject = JsonSerializer.Deserialize<RootBookObject>(result);
+                    var responseObject = JsonSerializer.Deserialize<RootMovieObject>(result);
 
                     return CustomResponse(responseObject);
-                    // Aqui você pode processar os dados retornados conforme necessário
                 }
                 else
                 {
                     Console.WriteLine($"Erro na solicitação: {response.StatusCode} - {response.ReasonPhrase}");
-
                     return BadRequest();
                 }
             }
