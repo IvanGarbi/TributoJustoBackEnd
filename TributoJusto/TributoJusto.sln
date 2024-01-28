@@ -5,11 +5,15 @@ VisualStudioVersion = 17.8.34511.84
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{E42FEA31-5F45-402D-BC1D-1F072BD156B7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TributoJusto.API", "src\TributoJusto.API\TributoJusto.API.csproj", "{0ED414FE-E89D-46F8-BED6-FAA7327696C4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TributoJusto.API", "src\TributoJusto.API\TributoJusto.API.csproj", "{0ED414FE-E89D-46F8-BED6-FAA7327696C4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TributoJusto.Data", "src\TributoJusto.Data\TributoJusto.Data.csproj", "{FD6E342B-D3A8-4492-A227-25D32DA967A9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TributoJusto.Data", "src\TributoJusto.Data\TributoJusto.Data.csproj", "{FD6E342B-D3A8-4492-A227-25D32DA967A9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TributoJusto.Business", "src\TributoJusto.Business\TributoJusto.Business.csproj", "{6B7E3C31-4DF7-4558-A3A8-ECFC1065C659}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TributoJusto.Business", "src\TributoJusto.Business\TributoJusto.Business.csproj", "{6B7E3C31-4DF7-4558-A3A8-ECFC1065C659}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{A152279C-E37F-46FA-9474-4E42EB716AC0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TributoJusto.Tests", "tests\TributoJusto.Tests\TributoJusto.Tests.csproj", "{F722AC77-46A7-4482-9875-8FAE574B4D8D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -29,6 +33,10 @@ Global
 		{6B7E3C31-4DF7-4558-A3A8-ECFC1065C659}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6B7E3C31-4DF7-4558-A3A8-ECFC1065C659}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6B7E3C31-4DF7-4558-A3A8-ECFC1065C659}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F722AC77-46A7-4482-9875-8FAE574B4D8D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F722AC77-46A7-4482-9875-8FAE574B4D8D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F722AC77-46A7-4482-9875-8FAE574B4D8D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F722AC77-46A7-4482-9875-8FAE574B4D8D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -37,6 +45,7 @@ Global
 		{0ED414FE-E89D-46F8-BED6-FAA7327696C4} = {E42FEA31-5F45-402D-BC1D-1F072BD156B7}
 		{FD6E342B-D3A8-4492-A227-25D32DA967A9} = {E42FEA31-5F45-402D-BC1D-1F072BD156B7}
 		{6B7E3C31-4DF7-4558-A3A8-ECFC1065C659} = {E42FEA31-5F45-402D-BC1D-1F072BD156B7}
+		{F722AC77-46A7-4482-9875-8FAE574B4D8D} = {A152279C-E37F-46FA-9474-4E42EB716AC0}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {F69AFF24-FDDB-40A4-AD3E-0F4D72727BD5}
