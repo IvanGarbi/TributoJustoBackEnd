@@ -7,6 +7,7 @@ using System.Text;
 using TributoJusto.API.Controllers;
 using TributoJusto.API.Data;
 using TributoJusto.API.Extension;
+using TributoJusto.Data.Context;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -66,6 +67,11 @@ builder.Services.AddSwaggerGen(options =>
 
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
+{
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
+});
+
+builder.Services.AddDbContext<TributoJustoDbContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
 });

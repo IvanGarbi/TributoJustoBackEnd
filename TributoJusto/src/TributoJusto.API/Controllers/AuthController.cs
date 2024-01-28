@@ -10,7 +10,6 @@ using System.Security.Claims;
 using System.Text;
 using TributoJusto.API.Extension;
 using TributoJusto.API.ViewModels;
-using System.Text.Json;
 
 namespace TributoJusto.API.Controllers
 {
@@ -29,67 +28,6 @@ namespace TributoJusto.API.Controllers
             _signInManager = signInManager;
             _userManager = userManager;
             _appSettings = appSettings.Value;
-        }
-
-
-        [HttpGet]
-        public async Task<IActionResult> Get()
-        {
-            // Create the service.
-            //using (HttpClient client = new HttpClient())
-            //{
-
-            //    string searchTerm = "Harry Potter";
-
-            //    string apiKey = ""; // Substitua com sua chave de API do Google Books
-            //    string apiUrl = $"https://www.googleapis.com/books/v1/volumes?q={searchTerm}&key={apiKey}";
-
-            //    HttpResponseMessage response = await client.GetAsync(apiUrl);
-
-            //    if (response.IsSuccessStatusCode)
-            //    {
-            //        string result = await response.Content.ReadAsStringAsync();
-
-            //        var responseObject = JsonSerializer.Deserialize<RootBookObject>(result);
-
-            //        Console.WriteLine(result);
-            //        // Aqui você pode processar os dados retornados conforme necessário
-            //    }
-            //    else
-            //    {
-            //        Console.WriteLine($"Erro na solicitação: {response.StatusCode} - {response.ReasonPhrase}");
-            //    }
-            //}
-
-
-            using (HttpClient client = new HttpClient())
-            {
-
-                string searchTerm = "Fast";
-
-                string apiKey = ""; // Substitua com sua chave de API do Google Books
-                string apiUrl = $"http://www.omdbapi.com/?i=tt3896198&apikey={apiKey}&t={searchTerm}";
-
-                HttpResponseMessage response = await client.GetAsync(apiUrl);
-
-                if (response.IsSuccessStatusCode)
-                {
-                    string result = await response.Content.ReadAsStringAsync();
-
-                    var responseObject = JsonSerializer.Deserialize<RootMovieObject>(result);
-
-                    Console.WriteLine(result);
-                    // Aqui você pode processar os dados retornados conforme necessário
-                }
-                else
-                {
-                    Console.WriteLine($"Erro na solicitação: {response.StatusCode} - {response.ReasonPhrase}");
-                }
-            }
-
-        
-
-            return Ok();
         }
 
         [HttpPost("Registrar")]
@@ -141,11 +79,12 @@ namespace TributoJusto.API.Controllers
             return CustomResponse();
         }
 
-        //public async Task<IActionResult> SignOut()
-        //{
-        //    await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
-        //    return CustomResponse("Logout com sucesso");
-        //}
+        [HttpDelete("SignOut")]
+        public async Task<IActionResult> SignOut()
+        {
+            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            return CustomResponse("Logout com sucesso");
+        }
 
         #region MétodosPrivados
 
@@ -219,69 +158,3 @@ namespace TributoJusto.API.Controllers
         #endregion
     }
 }
-
-
-public class RootBookObject
-{
-    public Item[] items { get; set; }
-}
-
-public class Item
-{
-    public VolumeInfo volumeInfo { get; set; }
-    public AccessInfo accessInfo { get; set; }
-    public SaleInfo saleInfo { get; set; }
-}
-
-public class VolumeInfo
-{
-    public string title { get; set; }
-    public string[] authors { get; set; }
-    public string[] categories { get; set; }
-    public string publisher { get; set; }
-    public int pageCount { get; set; }
-    public string description { get; set; }
-}
-
-public class AccessInfo
-{
-    public string country { get; set; }
-}
-
-public class SaleInfo
-{
-    public string country { get; set; }
-    public RetailPrice retailPrice { get; set; }
-    public string saleability { get; set; }
-}
-
-public class RetailPrice
-{
-    public decimal amount { get; set; }
-    public string currencyCode { get; set; }
-}
-
-
-
-
-
-
-
-
-
-
-
-public class RootMovieObject
-{
-    public string Title { get; set; }
-    public string Year { get; set; }
-    public string Genre { get; set; }
-    public string Director { get; set; }
-    public string Writer { get; set; }
-    public string Actors { get; set; }
-    public string Plot { get; set; }
-    public string Country { get; set; }
-    public string imdbRating { get; set; }
-    
-}
-
