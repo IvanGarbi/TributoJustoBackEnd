@@ -23,7 +23,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="UnitTests\Filmes\" />
     <Folder Include="UnitTests\Livros\" />
     <Folder Include="UnitTests\Favoritos\" />
   </ItemGroup>
