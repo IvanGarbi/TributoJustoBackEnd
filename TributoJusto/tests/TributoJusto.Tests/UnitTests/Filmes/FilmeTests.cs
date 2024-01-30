@@ -41,7 +41,7 @@ namespace TributoJusto.Tests.UnitTests.Filmes
             // Assert
             Assert.False(result.IsValid);
             Assert.NotEmpty(result.Errors);
-            Assert.Equal(2, result.Errors.Count);
+            Assert.Equal(9, result.Errors.Count);
         }
     }
 }

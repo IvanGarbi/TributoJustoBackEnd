@@ -8,6 +8,7 @@ namespace TributoJusto.Business.Validations
         public FavoritoValidation()
         {
             RuleFor(x => x.UsuarioId)
+                .NotEmpty()
                 .NotNull()
                 .WithMessage("O {PropertyName} deve ser informado.");
         }

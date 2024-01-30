@@ -23,11 +23,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="UnitTests\Livros\" />
-    <Folder Include="UnitTests\Favoritos\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\..\src\TributoJusto.Business\TributoJusto.Business.csproj" />
   </ItemGroup>
 
