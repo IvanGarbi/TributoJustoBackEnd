@@ -33,11 +33,6 @@ namespace TributoJusto.Data.Repository
             return await DbSet.AsNoTracking().Where(x => x.Id == id).FirstOrDefaultAsync();
         }
 
-        //public virtual async Task<IEnumerable<TEntity>> ReadExpression(Expression<Func<TEntity, bool>> predicateExpression)
-        //{
-        //    return await DbSet.AsNoTracking().Where(predicateExpression).ToListAsync();
-        //}
-
         public async Task<int> SaveChanges()
         {
             return await Db.SaveChangesAsync();
