@@ -1,6 +1,4 @@
-﻿using TributoJusto.Business.Models;
-using TributoJusto.Business.Services;
-
+﻿
 namespace TributoJusto.API.ViewModels
 {
     public class FavoritoViewModel

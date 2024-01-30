@@ -10,7 +10,9 @@ namespace TributoJusto.API.AutoMapper
         {
             CreateMap<FilmeViewModel, Filme>().ReverseMap();
             CreateMap<LivroViewModel, Livro>().ReverseMap();
-            CreateMap<FavoritoViewModel, Favorito>().ReverseMap();
+            CreateMap<FavoritoViewModel, Favorito>().ForMember(x => x.Filme, z => z.MapFrom(a => a.FilmeViewModel))
+                                                    .ForMember(x => x.Livro, z => z.MapFrom(a => a.LivroViewModel))
+                                                    .ReverseMap();
         }
     }
 }

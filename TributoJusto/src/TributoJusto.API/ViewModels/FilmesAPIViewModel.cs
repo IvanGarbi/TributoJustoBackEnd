@@ -2,7 +2,6 @@
 {
     public class RootMovieObject
     {
-        //public Guid Id { get; set; } = Guid.NewGuid();
         public string Title { get; set; }
         public string Year { get; set; }
         public string Genre { get; set; }

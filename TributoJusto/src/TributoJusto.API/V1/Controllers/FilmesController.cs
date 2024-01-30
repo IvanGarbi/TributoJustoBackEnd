@@ -22,7 +22,7 @@ namespace TributoJusto.API.V1.Controllers
         {
             using (HttpClient client = new HttpClient())
             {
-                string apiKey = ""; // Substitua com sua chave de API do Google Books
+                string apiKey = ""; // Substitua com sua chave de API do OmdbApi
                 string apiUrl = $"http://www.omdbapi.com/?i=tt3896198&apikey={apiKey}&t={nomeFilme}";
 
                 HttpResponseMessage response = await client.GetAsync(apiUrl);

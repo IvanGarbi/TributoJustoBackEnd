@@ -17,7 +17,6 @@ namespace TributoJusto.API.V1.Controllers
 
         }
 
-
         [HttpGet]
         public async Task<IActionResult> Get(string nomeLivro)
         {
