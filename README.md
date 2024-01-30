@@ -26,4 +26,4 @@ Testes de Unidade com xUnit.NET
 
 # Funcionamento
 Primeiramente é necessário rodar a migration contida no projeto Data.
-Após criado o banco de dados, é necessário inserir as duas chaves de consumo das API terceiras, da Google e da OmdbApi. As chaves devem ser inseridas dentro das Controllers.
+Após criado o banco de dados, é necessário inserir as duas chaves de consumo das API terceiras, da Google e da OmdbApi. As chaves devem ser inseridas dentro das Controllers no projeto API.
